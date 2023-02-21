@@ -1,12 +1,18 @@
 import React, { FC } from "react";
 import { Cat } from "types/cat";
-import {Grid, Modal, styled} from "@mui/material";
+import { Box, Button, Modal, styled, Typography } from "@mui/material";
 import CatImage from "./CatImage";
+import StarBorder from "@mui/icons-material/StarBorder";
 
 const MODAL_WIDTH = 600;
 
-const ModalContent = styled(Grid)({
+const ModalContent = styled(Box)({
   width: `${MODAL_WIDTH}px`,
+  maxWidth: "90%",
+  maxHeight: "90vh",
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -18,6 +24,18 @@ const ModalContent = styled(Grid)({
   outline: "none"
 });
 
+const ModalImage = styled(Box)({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  overflow: "hidden"
+});
+
+const ScrollableDescription = styled(Typography)({
+  overflowY: "auto",
+  textAlign: "justify"
+});
+
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -26,17 +44,19 @@ interface Props {
 
 const CatModal: FC<Props> = ({ open, onClose, cat }) => {
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-    >
+    <Modal open={open} onClose={onClose}>
       <ModalContent>
-        <CatImage cat={cat} width={MODAL_WIDTH > 1000 ? 900 : MODAL_WIDTH - 100} />
-        {
-          cat.breeds.map((breed) => (
-            <p key={breed.id}>{breed.description}</p>
-          ))
-        }
+        <ModalImage>
+          <CatImage cat={cat} width={MODAL_WIDTH - 100} />
+        </ModalImage>
+          {
+            cat.breeds.map((breed) => (
+              <ScrollableDescription key={breed.id}>
+                {breed.description}
+              </ScrollableDescription>
+            ))
+          }
+        <Button variant="contained" startIcon={<StarBorder />}>Mark as favourite</Button>
       </ModalContent>
     </Modal>
   );
