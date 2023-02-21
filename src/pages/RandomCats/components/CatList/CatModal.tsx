@@ -3,6 +3,7 @@ import { Cat } from "types/cat";
 import { Box, Button, Modal, styled, Typography } from "@mui/material";
 import CatImage from "./CatImage";
 import StarBorder from "@mui/icons-material/StarBorder";
+import { useAddCatToFavourites } from "apis/catApi";
 
 const MODAL_WIDTH = 600;
 
@@ -31,7 +32,7 @@ const ModalImage = styled(Box)({
   overflow: "hidden"
 });
 
-const ScrollableDescription = styled(Typography)({
+const Description = styled(Typography)({
   overflowY: "auto",
   textAlign: "justify"
 });
@@ -43,6 +44,8 @@ interface Props {
 }
 
 const CatModal: FC<Props> = ({ open, onClose, cat }) => {
+  const { addCatToFavourites, isLoading } = useAddCatToFavourites();
+
   return (
     <Modal open={open} onClose={onClose}>
       <ModalContent>
@@ -51,12 +54,19 @@ const CatModal: FC<Props> = ({ open, onClose, cat }) => {
         </ModalImage>
           {
             cat.breeds.map((breed) => (
-              <ScrollableDescription key={breed.id}>
+              <Description key={breed.id}>
                 {breed.description}
-              </ScrollableDescription>
+              </Description>
             ))
           }
-        <Button variant="contained" startIcon={<StarBorder />}>Mark as favourite</Button>
+        <Button
+          variant="contained"
+          startIcon={<StarBorder />}
+          onClick={() => addCatToFavourites(cat.id)}
+          disabled={isLoading}
+        >
+          Mark as favourite
+        </Button>
       </ModalContent>
     </Modal>
   );
