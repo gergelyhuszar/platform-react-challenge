@@ -1,4 +1,5 @@
 interface Breed {
+  id: string;
   description: string;
 }
 
