@@ -1,25 +1,34 @@
-import React, { FC } from "react";
-import {Grid} from "@mui/material";
+import React, { FC, useEffect, useState } from "react";
+import { Grid } from "@mui/material";
 import CatImage from "./CatImage";
-
-const MOCK_URL = "https://cdn2.thecatapi.com/images/MjA1OTI5MQ.jpg";
-const MOCK_RESPONSE = [MOCK_URL, MOCK_URL, MOCK_URL, MOCK_URL, MOCK_URL];
+import { getCats } from "apis/catApi";
+import { Cat } from "types/cat";
 
 const CatList: FC = () => {
+  const [catList, setCatList] = useState<Cat[]>();
+
+  useEffect(() => {
+    (async () => {
+      const cats = await getCats();
+      console.log(cats)
+      setCatList(cats);
+    })();
+  }, []);
+
   return (
     <Grid
       item
       container
       direction="row"
       justifyContent="center"
-      spacing="50px"
+      alignItems="center"
       width="80%"
-      marginTop="10px"
+      marginBottom="50px"
     >
       {
-        MOCK_RESPONSE.map((url, index) => (
-          <Grid item key={index}>
-            <CatImage src={MOCK_URL} />
+        catList?.map((cat) => (
+          <Grid item key={cat.id} marginTop="50px" marginLeft="50px">
+            <CatImage cat={cat} />
           </Grid>
         ))
       }
