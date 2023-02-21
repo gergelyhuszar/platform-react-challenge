@@ -1,16 +1,15 @@
 import React, { FC } from "react";
 import { Grid } from "@mui/material";
+import CatList from "./components/CatList";
 
 const RandomCats: FC = () => (
   <Grid
     container
     direction="column"
-    justifyContent="flex-start"
+    justifyContent="center"
+    alignItems="center"
   >
-    <Grid item>
-
-    </Grid>
-    I am Random Cats Page. Work in progress...
+    <CatList />
   </Grid>
 );
 
