@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Cat } from "types/cat";
+import { useState } from "react";
 
 const api = axios.create({
   baseURL: "https://api.thecatapi.com/v1",
@@ -22,4 +23,26 @@ const getCats = async (): Promise<Cat[]> => {
   return cats;
 };
 
-export { getCats };
+const useAddCatToFavourites = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const addCatToFavourites = async (catId: string) => {
+    try {
+      setIsLoading(true);
+      await api.post("/favourites", {
+        "image_id": catId
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return {
+    addCatToFavourites,
+    isLoading
+  };
+};
+
+export { getCats, useAddCatToFavourites };
