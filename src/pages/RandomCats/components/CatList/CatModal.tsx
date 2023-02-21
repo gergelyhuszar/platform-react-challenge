@@ -33,8 +33,8 @@ const CatModal: FC<Props> = ({ open, onClose, cat }) => {
       <ModalContent>
         <CatImage cat={cat} width={MODAL_WIDTH > 1000 ? 900 : MODAL_WIDTH - 100} />
         {
-          cat.breeds.map((breed, index) => (
-            <span key={index}>{breed.description}</span>
+          cat.breeds.map((breed) => (
+            <p key={breed.id}>{breed.description}</p>
           ))
         }
       </ModalContent>
