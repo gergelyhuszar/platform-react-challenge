@@ -4,10 +4,13 @@ import CatImage from "./CatImage";
 import { getCats } from "apis/catApi";
 import { Cat } from "types/cat";
 import CatModal from "./CatModal";
+import { useCatContext } from "context/CatContext";
+import { useCatIdParam } from "hooks/params";
 
 const CatList: FC = () => {
   const [catList, setCatList] = useState<Cat[]>([]);
-  const [selectedCat, setSelectedCat] = useState<Cat | null>(null);
+  const { selectedCat, setSelectedCat } = useCatContext();
+  const { setCatIdParam } = useCatIdParam();
 
   useEffect(() => {
     (async () => {
@@ -30,14 +33,27 @@ const CatList: FC = () => {
         {
           catList.map((cat) => (
             <Grid item key={cat.id} marginTop="50px" marginLeft="50px">
-              <CatImage cat={cat} onClick={() => setSelectedCat(cat)} />
+              <CatImage
+                cat={cat}
+                onClick={async () => {
+                  setSelectedCat(cat);
+                  setCatIdParam(cat.id);
+                }}
+              />
             </Grid>
           ))
         }
       </Grid>
       {
         selectedCat && (
-          <CatModal open={!!selectedCat} onClose={() => setSelectedCat(null)} cat={selectedCat} />
+          <CatModal
+            open={!!selectedCat}
+            onClose={() => {
+              setSelectedCat(null);
+              setCatIdParam();
+            }}
+            cat={selectedCat}
+          />
         )
       }
     </>
