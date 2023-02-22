@@ -71,7 +71,7 @@ const getCatBreeds = async (): Promise<Breed[]> => {
   let breeds: Breed[];
 
   try {
-    const { data } = await api.get("/breeds?limit=10");
+    const { data } = await api.get("/breeds");
     breeds = data;
   } catch (error) {
     breeds = [];
@@ -87,7 +87,7 @@ const getCatsByBreedId = async (breedId: string): Promise<Cat[]> => {
   try {
     const queryParams = {
       breed_ids: breedId,
-      limit: 10
+      limit: 3
     }
     const { data } = await api.get("/images/search", { params: queryParams });
     cats = data;
