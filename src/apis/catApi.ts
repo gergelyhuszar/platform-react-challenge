@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Cat } from "types/cat";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const api = axios.create({
   baseURL: "https://api.thecatapi.com/v1",
@@ -37,7 +37,7 @@ const useAddCatToFavourites = () => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return {
     addCatToFavourites,
@@ -45,4 +45,34 @@ const useAddCatToFavourites = () => {
   };
 };
 
-export { getCats, useAddCatToFavourites };
+const useGetCatById = (catId: string) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [data, setData] = useState<Cat | null>(null);
+
+  const getCatById = async () => {
+    try {
+      setIsLoading(true);
+      const response = await api.get(`/images/${catId}`);
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getCatById();
+  }, []);
+
+  return {
+    isLoading,
+    data
+  };
+};
+
+export {
+  getCats,
+  useAddCatToFavourites,
+  useGetCatById
+};
