@@ -1,5 +1,19 @@
 import React, { FC } from "react";
 import { Cat } from "types/cat";
+import { styled } from "@mui/material";
+
+interface ImageProps {
+  withHover: boolean;
+}
+
+const Image = styled('img')<ImageProps>(({ withHover }) => ({
+  '&:hover': {
+    cursor: withHover ? "pointer" : "initial",
+    boxShadow: withHover
+      ? "rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px"
+      : "none"
+  }
+}));
 
 interface Props {
   cat: Cat;
@@ -9,11 +23,11 @@ interface Props {
 
 const CatImage: FC<Props> = ({ cat, onClick, width = 300 }) => {
   return (
-    <img
+    <Image
       src={cat.url}
       alt="cat"
       onClick={onClick}
-      style={{ cursor: onClick ? "pointer" : "initial" }}
+      withHover={!!onClick}
       width={width}
       /**
       * Images are painted at different speeds.
