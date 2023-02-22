@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { getCatBreeds } from "apis/catApi";
 import { Breed } from "types/cat";
-import { useCatIdParam } from "hooks/params";
+import { useBreedIdParam, useCatIdParam } from "hooks/params";
 import BreedModal from "./BreedModal";
 import CatImage from "components/CatImage";
 import CatModal from "components/CatModal";
@@ -11,9 +11,10 @@ import { useFetch } from "hooks/fetcher";
 
 const BreedList: FC = () => {
   const [breedList, setBreedList] = useState<Breed[]>([]);
-  const [selectedBreed, setSelectedBreed] = useState<Breed | null>(null);
-  const { selectedCat, setSelectedCat } = useCatContext();
+  const [selectedBreedName, setSelectedBreedName] = useState<string>("");
+  const { selectedCat, selectedBreedCats } = useCatContext();
   const { setCatIdParam } = useCatIdParam();
+  const { setBreedIdParam } = useBreedIdParam();
 
   useFetch(() => {
     (async () => {
@@ -35,32 +36,32 @@ const BreedList: FC = () => {
         {
           breedList.map((breed) => { return breed.image && (
             <Grid item key={breed.id} marginTop="50px" marginLeft="50px">
+              <Typography variant="h6">{breed.name}</Typography>
               <CatImage
                 cat={breed.image}
-                onClick={() => setSelectedBreed(breed)}
+                onClick={() => {
+                  setBreedIdParam(breed.id);
+                  setSelectedBreedName(breed.name || "");
+                }}
               />
             </Grid>
           )})
         }
       </Grid>
-      {
-        selectedBreed?.name && (
-          <BreedModal
-            open={!!selectedBreed}
-            onClose={() => setSelectedBreed(null)}
-            breedId={selectedBreed.id}
-            breedName={selectedBreed.name}
-          />
-        )
-      }
+      <BreedModal
+        open={selectedBreedCats.length !== 0}
+        onClose={() => {
+          setBreedIdParam();
+          setSelectedBreedName("");
+        }}
+        catList={selectedBreedCats}
+        breedName={selectedBreedName}
+      />
       {
         selectedCat && (
           <CatModal
             open={!!selectedCat}
-            onClose={() => {
-              setSelectedCat(null);
-              setCatIdParam();
-            }}
+            onClose={() => setCatIdParam()}
             cat={selectedCat}
           />
         )

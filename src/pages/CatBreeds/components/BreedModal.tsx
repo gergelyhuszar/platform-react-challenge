@@ -1,36 +1,24 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Cat } from "types/cat";
 import { Dialog, DialogContent, DialogTitle, Grid, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { getCatsByBreedId } from "apis/catApi";
 import CatImage from "components/CatImage";
-import { useCatContext } from "context/CatContext";
 import { useCatIdParam } from "hooks/params";
-import { useFetch } from "hooks/fetcher";
 
 const MODAL_WIDTH = 600;
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  breedId: string;
+  catList: Cat[];
   breedName: string;
 }
 
-const BreedModal: FC<Props> = ({ open, onClose, breedId, breedName }) => {
-  const [catList, setCatList] = useState<Cat[]>([]);
-  const { setSelectedCat } = useCatContext();
+const BreedModal: FC<Props> = ({ open, onClose, catList, breedName }) => {
   const { setCatIdParam } = useCatIdParam();
 
-  useFetch(() => {
-    (async () => {
-      const cats = await getCatsByBreedId(breedId);
-      setCatList(cats);
-    })();
-  });
-
   const dialogTitle = (
-    <DialogTitle sx={{ m: 2 }}>
+    <DialogTitle margin="10px">
       {breedName}
       {onClose && (
         <IconButton
@@ -53,16 +41,14 @@ const BreedModal: FC<Props> = ({ open, onClose, breedId, breedName }) => {
         container
         direction="row"
         justifyContent="center"
+        marginBottom="20px"
       >
         {
           catList.map((cat) => (
             <Grid item key={cat.id}>
               <CatImage
                 cat={cat}
-                onClick={async () => {
-                  setSelectedCat(cat);
-                  setCatIdParam(cat.id);
-                }}
+                onClick={() => setCatIdParam(cat.id)}
                 width={MODAL_WIDTH - 100}
               />
             </Grid>
@@ -73,15 +59,13 @@ const BreedModal: FC<Props> = ({ open, onClose, breedId, breedName }) => {
   );
 
   return (
-    <>
-      <Dialog
-        onClose={onClose}
-        open={open}
-      >
-        {dialogTitle}
-        {dialogContent}
-      </Dialog>
-    </>
+    <Dialog
+      onClose={onClose}
+      open={open}
+    >
+      {dialogTitle}
+      {dialogContent}
+    </Dialog>
   );
 };
 

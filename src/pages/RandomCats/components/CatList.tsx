@@ -10,7 +10,7 @@ import { useFetch } from "hooks/fetcher";
 
 const CatList: FC = () => {
   const [catList, setCatList] = useState<Cat[]>([]);
-  const { selectedCat, setSelectedCat } = useCatContext();
+  const { selectedCat } = useCatContext();
   const { setCatIdParam } = useCatIdParam();
 
   useFetch(() => {
@@ -35,10 +35,7 @@ const CatList: FC = () => {
             <Grid item key={cat.id} marginTop="50px" marginLeft="50px">
               <CatImage
                 cat={cat}
-                onClick={async () => {
-                  setSelectedCat(cat);
-                  setCatIdParam(cat.id);
-                }}
+                onClick={() => setCatIdParam(cat.id)}
               />
             </Grid>
           ))
@@ -48,10 +45,7 @@ const CatList: FC = () => {
         selectedCat && (
           <CatModal
             open={!!selectedCat}
-            onClose={() => {
-              setSelectedCat(null);
-              setCatIdParam();
-            }}
+            onClose={() => setCatIdParam()}
             cat={selectedCat}
           />
         )
