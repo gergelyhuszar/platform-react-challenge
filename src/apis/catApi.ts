@@ -74,9 +74,28 @@ const getCatBreeds = async (): Promise<Breed[]> => {
   return breeds;
 };
 
+const getCatsByBreedId = async (breedId: string): Promise<Cat[]> => {
+  let cats: Cat[];
+
+  try {
+    const queryParams = {
+      breed_ids: breedId,
+      limit: 10
+    }
+    const { data } = await api.get("/images/search", { params: queryParams });
+    cats = data;
+  } catch (error) {
+    cats = [];
+    console.error(error);
+  }
+
+  return cats;
+};
+
 export {
   getCats,
   useAddCatToFavourites,
   getCatById,
-  getCatBreeds
+  getCatBreeds,
+  getCatsByBreedId
 };
