@@ -1,9 +1,16 @@
 import React, { FC } from "react";
+import { Grid } from "@mui/material";
+import FavouriteCatList from "./components/FavouriteCatList";
 
 const FavouriteCats: FC = () => (
-  <h1>
-    I am Favourite Cats Page. Work in progress...
-  </h1>
+  <Grid
+    container
+    direction="column"
+    justifyContent="center"
+    alignItems="center"
+  >
+    <FavouriteCatList />
+  </Grid>
 );
 
 export default FavouriteCats;
