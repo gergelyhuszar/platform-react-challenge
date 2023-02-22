@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import { getCatBreeds } from "apis/catApi";
 import { Breed } from "types/cat";
 import { useBreedIdParam, useCatIdParam } from "hooks/params";
@@ -48,6 +48,11 @@ const BreedList: FC = () => {
           )})
         }
       </Grid>
+
+      { breedList.length === 0 && (
+        <CircularProgress />
+      )}
+
       <BreedModal
         open={selectedBreedCats.length !== 0}
         onClose={() => {
@@ -57,6 +62,7 @@ const BreedList: FC = () => {
         catList={selectedBreedCats}
         breedName={selectedBreedName}
       />
+
       {
         selectedCat && (
           <CatModal

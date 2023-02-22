@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Button, Grid } from "@mui/material";
+import { Button, CircularProgress, Grid } from "@mui/material";
 import CatImage from "components/CatImage";
 import { getCats } from "apis/catApi";
 import { Cat } from "types/cat";
@@ -43,10 +43,14 @@ const CatList: FC = () => {
         }
       </Grid>
 
+      { catList.length === 0 && (
+        <CircularProgress />
+      )}
+
       <Button
         variant="contained"
         onClick={() => refetch()}
-        sx={{ marginBottom: "50px" }}
+        sx={{ margin: "50px" }}
       >
         Load more cats
       </Button>

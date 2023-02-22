@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import { deleteCatFromFavourites, getFavouriteCats } from "apis/catApi";
 import { Cat } from "types/cat";
 import CatImage from "components/CatImage";
@@ -41,6 +41,11 @@ const FavouriteCatList: FC = () => {
           ))
         }
       </Grid>
+
+      { catList.length === 0 && (
+        <CircularProgress />
+      )}
+
     </>
   );
 };
