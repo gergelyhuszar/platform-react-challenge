@@ -23,7 +23,8 @@
     "paths": {
       "apis/*": ["apis/*"],
       "pages/*": ["pages/*"],
-      "types/*": ["types/*"]
+      "types/*": ["types/*"],
+      "context/*": ["context/*"]
     }
   },
   "include": [
