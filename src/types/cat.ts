@@ -2,6 +2,7 @@ interface Breed {
   id: string;
   description: string;
   image?: Cat;
+  name?: string;
 }
 
 interface Cat {
