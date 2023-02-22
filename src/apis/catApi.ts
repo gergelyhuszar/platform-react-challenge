@@ -92,10 +92,25 @@ const getCatsByBreedId = async (breedId: string): Promise<Cat[]> => {
   return cats;
 };
 
+const getFavouriteCats = async (): Promise<Cat[]> => {
+  let cats: Cat[];
+
+  try {
+    const { data } = await api.get("/favourites");
+    cats = data;
+  } catch (error) {
+    cats = [];
+    console.error(error);
+  }
+
+  return cats;
+};
+
 export {
   getCats,
   useAddCatToFavourites,
   getCatById,
   getCatBreeds,
-  getCatsByBreedId
+  getCatsByBreedId,
+  getFavouriteCats
 };
