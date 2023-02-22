@@ -45,34 +45,23 @@ const useAddCatToFavourites = () => {
   };
 };
 
-const useGetCatById = (catId: string) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Cat | null>(null);
 
-  const getCatById = async () => {
-    try {
-      setIsLoading(true);
-      const response = await api.get(`/images/${catId}`);
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const getCatById = async (catId: string): Promise<Cat | null> => {
+  let cat: Cat | null;
 
-  useEffect(() => {
-    getCatById();
-  }, []);
+  try {
+    const { data } = await api.get(`/images/${catId}`);
+    cat = data;
+  } catch (error) {
+    cat = null;
+    console.error(error);
+  }
 
-  return {
-    isLoading,
-    data
-  };
+  return cat;
 };
 
 export {
   getCats,
   useAddCatToFavourites,
-  useGetCatById
+  getCatById
 };
