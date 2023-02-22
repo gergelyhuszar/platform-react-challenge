@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Cat } from "types/cat";
 import { Box, Button, Modal, styled, Typography } from "@mui/material";
-import CatImage from "./CatImage";
+import CatImage from "components/CatImage";
 import StarBorder from "@mui/icons-material/StarBorder";
 import { useAddCatToFavourites } from "apis/catApi";
 

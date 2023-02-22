@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import CatImage from "./CatImage";
+import CatImage from "components/CatImage";
 import { getCats } from "apis/catApi";
 import { Cat } from "types/cat";
-import CatModal from "./CatModal";
+import CatModal from "components/CatModal";
 import { useCatContext } from "context/CatContext";
 import { useCatIdParam } from "hooks/params";
 
