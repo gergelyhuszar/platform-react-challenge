@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Cat } from "types/cat";
-import { useEffect, useState } from "react";
+import { Breed, Cat } from "types/cat";
+import { useState } from "react";
 
 const api = axios.create({
   baseURL: "https://api.thecatapi.com/v1",
@@ -60,8 +60,23 @@ const getCatById = async (catId: string): Promise<Cat | null> => {
   return cat;
 };
 
+const getCatBreeds = async (): Promise<Breed[]> => {
+  let breeds: Breed[];
+
+  try {
+    const { data } = await api.get("/breeds?limit=10");
+    breeds = data;
+  } catch (error) {
+    breeds = [];
+    console.error(error);
+  }
+
+  return breeds;
+};
+
 export {
   getCats,
   useAddCatToFavourites,
-  getCatById
+  getCatById,
+  getCatBreeds
 };
