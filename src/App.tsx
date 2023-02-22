@@ -3,12 +3,11 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import RandomCats from "./pages/RandomCats";
 import CatBreeds from "./pages/CatBreeds";
 import FavouriteCats from "./pages/FavouriteCats";
-import { CssBaseline } from "@mui/material";
+import Bootstrapper from "components/Bootstrapper/Bootstrapper";
 
 const App: FC = () => {
   return (
-    <>
-      <CssBaseline />
+    <Bootstrapper>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<RandomCats />} />
@@ -17,7 +16,7 @@ const App: FC = () => {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </Bootstrapper>
   );
 }
 
