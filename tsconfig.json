@@ -24,7 +24,8 @@
       "apis/*": ["apis/*"],
       "pages/*": ["pages/*"],
       "types/*": ["types/*"],
-      "context/*": ["context/*"]
+      "context/*": ["context/*"],
+      "components/*": ["components/*"]
     }
   },
   "include": [
