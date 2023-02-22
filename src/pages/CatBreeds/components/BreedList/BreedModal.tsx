@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { Cat } from "types/cat";
 import { Dialog, DialogContent, DialogTitle, Grid, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -6,6 +6,7 @@ import { getCatsByBreedId } from "apis/catApi";
 import CatImage from "components/CatImage";
 import { useCatContext } from "context/CatContext";
 import { useCatIdParam } from "hooks/params";
+import { useFetch } from "hooks/fetcher";
 
 const MODAL_WIDTH = 600;
 
@@ -21,12 +22,12 @@ const BreedModal: FC<Props> = ({ open, onClose, breedId, breedName }) => {
   const { setSelectedCat } = useCatContext();
   const { setCatIdParam } = useCatIdParam();
 
-  useEffect(() => {
+  useFetch(() => {
     (async () => {
       const cats = await getCatsByBreedId(breedId);
       setCatList(cats);
     })();
-  }, []);
+  });
 
   const dialogTitle = (
     <DialogTitle sx={{ m: 2 }}>

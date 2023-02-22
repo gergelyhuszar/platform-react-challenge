@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { Grid } from "@mui/material";
 import { getCatBreeds } from "apis/catApi";
 import { Breed } from "types/cat";
@@ -7,6 +7,7 @@ import BreedModal from "./BreedModal";
 import CatImage from "components/CatImage";
 import CatModal from "components/CatModal";
 import { useCatContext } from "context/CatContext";
+import { useFetch } from "hooks/fetcher";
 
 const BreedList: FC = () => {
   const [breedList, setBreedList] = useState<Breed[]>([]);
@@ -14,12 +15,12 @@ const BreedList: FC = () => {
   const { selectedCat, setSelectedCat } = useCatContext();
   const { setCatIdParam } = useCatIdParam();
 
-  useEffect(() => {
+  useFetch(() => {
     (async () => {
       const breeds = await getCatBreeds();
       setBreedList(breeds);
     })();
-  }, []);
+  });
 
   return (
     <>
