@@ -18,7 +18,7 @@ const CatImage: FC<Props> = ({ cat, onClick, width = 300 }) => {
       /**
       * Images are painted at different speeds.
       * This would cause Cumulative Layout Shift (CLS) during the Critical Rendering Path's (CRP) Layout step.
-      * To avoid CLS, the height is explicitly calculated and passed as an attribute.
+      * One way to avoid CLS is to explicitly calculate height and pass it as an attribute.
       *
       * For more information please visit the following links:
       * Cumulative Layout Shift (CLS): https://web.dev/cls/
