@@ -1,9 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 import { Cat } from "types/cat";
 import { Box, Button, Modal, styled, Typography } from "@mui/material";
 import CatImage from "components/CatImage";
-import StarBorder from "@mui/icons-material/StarBorder";
+import StarIcon from '@mui/icons-material/Star';
+import PetsIcon from '@mui/icons-material/Pets';
 import { useAddCatToFavourites } from "apis/catApi";
+import { useBreedIdParam, useCatIdParam } from "hooks/params";
+import {useNavigate} from "react-router-dom";
 
 const MODAL_WIDTH = 600;
 
@@ -34,7 +37,8 @@ const ModalImage = styled(Box)({
 
 const Description = styled(Typography)({
   overflowY: "auto",
-  textAlign: "justify"
+  textAlign: "justify",
+  marginBottom: "20px"
 });
 
 interface Props {
@@ -44,24 +48,45 @@ interface Props {
 }
 
 const CatModal: FC<Props> = ({ open, onClose, cat }) => {
+  const navigate = useNavigate();
   const { addCatToFavourites, isLoading } = useAddCatToFavourites();
+  const { setCatIdParam } = useCatIdParam();
+  const { setBreedIdParam } = useBreedIdParam();
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} sx={{ zIndex: 1301 }}>
       <ModalContent>
         <ModalImage>
           <CatImage cat={cat} width={MODAL_WIDTH - 100} />
         </ModalImage>
-          {
-            cat.breeds?.map((breed) => (
-              <Description key={breed.id}>
-                {breed.description}
-              </Description>
-            ))
-          }
+
+        { cat.breeds && cat.breeds?.length !== 0 && (
+          <Box marginTop="20px" marginBottom="20px">
+            {
+              cat.breeds?.map((breed) => (
+                  <Description key={breed.id}>
+                    {breed.description}
+                  </Description>
+              ))
+            }
+            <Button
+              variant="contained"
+              fullWidth
+              startIcon={<PetsIcon />}
+              onClick={() => {
+                setCatIdParam();
+                setBreedIdParam();
+                navigate(`/cat-breeds`);
+              }}
+            >
+              Go to breeds
+            </Button>
+          </Box>
+        )}
+
         <Button
           variant="contained"
-          startIcon={<StarBorder />}
+          startIcon={<StarIcon />}
           onClick={() => addCatToFavourites(cat.id)}
           disabled={isLoading}
         >
