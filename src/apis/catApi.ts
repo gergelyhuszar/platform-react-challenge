@@ -45,6 +45,13 @@ const useAddCatToFavourites = () => {
   };
 };
 
+const deleteCatFromFavourites = async (favouriteId: string) => {
+  try {
+    await api.delete(`/favourites/${favouriteId}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const getCatById = async (catId: string): Promise<Cat | null> => {
   let cat: Cat | null;
@@ -96,9 +103,15 @@ const getFavouriteCats = async (): Promise<Cat[]> => {
   let cats: Cat[];
 
   try {
-    const { data }: { data: { image_id: string }[] } = await api.get("/favourites");
+    const { data }: { data: { id: string; image_id: string; }[] } = await api.get("/favourites");
     const catsWithNulls = await Promise.all(data.map((cat) => getCatById(cat.image_id)));
-    cats = catsWithNulls.filter((cat): cat is Exclude<typeof cat, null> => cat !== null);
+    const catsWithoutNulls = catsWithNulls.filter(
+      (cat): cat is Exclude<typeof cat, null> => cat !== null
+    );
+    cats = catsWithoutNulls.map((cat) => ({
+      ...cat,
+      favouriteId: data.find(({ image_id }) => image_id === cat.id )?.id
+    }))
   } catch (error) {
     cats = [];
     console.error(error);
@@ -110,6 +123,7 @@ const getFavouriteCats = async (): Promise<Cat[]> => {
 export {
   getCats,
   useAddCatToFavourites,
+  deleteCatFromFavourites,
   getCatById,
   getCatBreeds,
   getCatsByBreedId,
