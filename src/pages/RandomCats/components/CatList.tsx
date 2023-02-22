@@ -7,7 +7,6 @@ import CatModal from "components/CatModal";
 import { useCatContext } from "context/CatContext";
 import { useCatIdParam } from "hooks/params";
 import { useFetch } from "hooks/fetcher";
-import PetsIcon from "@mui/icons-material/Pets";
 
 const CatList: FC = () => {
   const [catList, setCatList] = useState<Cat[]>([]);
