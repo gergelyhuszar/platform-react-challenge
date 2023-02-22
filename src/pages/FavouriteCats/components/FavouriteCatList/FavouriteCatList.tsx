@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Grid } from "@mui/material";
-import { getFavouriteCats } from "apis/catApi";
+import { deleteCatFromFavourites, getFavouriteCats } from "apis/catApi";
 import { Cat } from "types/cat";
 import CatImage from "components/CatImage";
 import { useFetch } from "hooks/fetcher";
@@ -28,7 +28,15 @@ const FavouriteCatList: FC = () => {
         {
           catList.map((cat) => (
             <Grid item key={cat.id} marginTop="50px" marginLeft="50px">
-              <CatImage cat={cat} />
+              <CatImage
+                cat={cat}
+                onClick={() => {
+                  if (cat.favouriteId){
+                    deleteCatFromFavourites(cat.favouriteId);
+                    setCatList((catList) => catList.filter(({ id }) => id !== cat.id ));
+                  }
+                }}
+              />
             </Grid>
           ))
         }
