@@ -7,8 +7,12 @@ import CatModal from "components/CatModal";
 import { useCatContext } from "context/CatContext";
 import { useCatIdParam } from "hooks/params";
 import { useFetch } from "hooks/fetcher";
+import { useNavigate } from "react-router-dom";
+import StarIcon from "@mui/icons-material/Star";
+import Sync from "@mui/icons-material/Sync";
 
 const CatList: FC = () => {
+  const navigate = useNavigate();
   const [catList, setCatList] = useState<Cat[]>([]);
   const { selectedCat } = useCatContext();
   const { setCatIdParam } = useCatIdParam();
@@ -22,6 +26,15 @@ const CatList: FC = () => {
 
   return (
     <>
+      <Button
+        variant="contained"
+        onClick={() => navigate("/favourite-cats")}
+        startIcon={<StarIcon />}
+        sx={{ marginTop: "50px" }}
+      >
+        Go to favourite cats
+      </Button>
+
       <Grid
         container
         direction="row"
@@ -49,6 +62,7 @@ const CatList: FC = () => {
       <Button
         variant="contained"
         onClick={() => refetch()}
+        startIcon={<Sync />}
         sx={{ margin: "50px" }}
       >
         Load more cats

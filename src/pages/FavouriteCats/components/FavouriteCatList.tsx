@@ -1,11 +1,14 @@
 import React, { FC, useState } from "react";
-import { CircularProgress, Grid } from "@mui/material";
+import {Button, CircularProgress, Grid} from "@mui/material";
 import { deleteCatFromFavourites, getFavouriteCats } from "apis/catApi";
 import { Cat } from "types/cat";
 import CatImage from "components/CatImage";
 import { useFetch } from "hooks/fetcher";
+import Sync from "@mui/icons-material/Sync";
+import { useNavigate } from "react-router-dom";
 
 const FavouriteCatList: FC = () => {
+  const navigate = useNavigate();
   const [catList, setCatList] = useState<Cat[]>([]);
 
   useFetch(() => {
@@ -17,6 +20,15 @@ const FavouriteCatList: FC = () => {
 
   return (
     <>
+      <Button
+        variant="contained"
+        onClick={() => navigate("/")}
+        startIcon={<Sync />}
+        sx={{ marginTop: "50px" }}
+      >
+        Load random cats
+      </Button>
+
       <Grid
         container
         direction="row"
