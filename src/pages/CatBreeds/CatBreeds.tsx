@@ -1,9 +1,16 @@
 import React, { FC } from "react";
+import { Grid } from "@mui/material";
+import BreedList from "./components/BreedList";
 
 const CatBreeds: FC = () => (
-  <h1>
-    I am Cat Breeds Page. Work in progress...
-  </h1>
+  <Grid
+    container
+    direction="column"
+    justifyContent="center"
+    alignItems="center"
+  >
+    <BreedList />
+  </Grid>
 );
 
 export default CatBreeds;

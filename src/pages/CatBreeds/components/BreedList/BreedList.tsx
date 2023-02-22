@@ -1,21 +1,23 @@
 import React, { FC, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
+import { getCatBreeds } from "apis/catApi";
+import { Breed } from "types/cat";
+import { useCatIdParam } from "hooks/params";
+import BreedModal from "./BreedModal";
 import CatImage from "components/CatImage";
-import { getCats } from "apis/catApi";
-import { Cat } from "types/cat";
 import CatModal from "components/CatModal";
 import { useCatContext } from "context/CatContext";
-import { useCatIdParam } from "hooks/params";
 
-const CatList: FC = () => {
-  const [catList, setCatList] = useState<Cat[]>([]);
+const BreedList: FC = () => {
+  const [breedList, setBreedList] = useState<Breed[]>([]);
+  const [selectedBreed, setSelectedBreed] = useState<Breed | null>(null);
   const { selectedCat, setSelectedCat } = useCatContext();
   const { setCatIdParam } = useCatIdParam();
 
   useEffect(() => {
     (async () => {
-      const cats = await getCats();
-      setCatList(cats);
+      const breeds = await getCatBreeds();
+      setBreedList(breeds);
     })();
   }, []);
 
@@ -30,19 +32,26 @@ const CatList: FC = () => {
         marginBottom="50px"
       >
         {
-          catList.map((cat) => (
-            <Grid item key={cat.id} marginTop="50px" marginLeft="50px">
+          breedList.map((breed) => { return breed.image && (
+            <Grid item key={breed.id} marginTop="50px" marginLeft="50px">
               <CatImage
-                cat={cat}
-                onClick={async () => {
-                  setSelectedCat(cat);
-                  setCatIdParam(cat.id);
-                }}
+                cat={breed.image}
+                onClick={() => setSelectedBreed(breed)}
               />
             </Grid>
-          ))
+          )})
         }
       </Grid>
+      {
+        selectedBreed?.name && (
+          <BreedModal
+            open={!!selectedBreed}
+            onClose={() => setSelectedBreed(null)}
+            breedId={selectedBreed.id}
+            breedName={selectedBreed.name}
+          />
+        )
+      }
       {
         selectedCat && (
           <CatModal
@@ -59,4 +68,4 @@ const CatList: FC = () => {
   );
 };
 
-export default CatList;
+export default BreedList;
