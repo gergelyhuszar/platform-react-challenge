@@ -25,7 +25,8 @@
       "pages/*": ["pages/*"],
       "types/*": ["types/*"],
       "context/*": ["context/*"],
-      "components/*": ["components/*"]
+      "components/*": ["components/*"],
+      "hooks/*": ["hooks/*"]
     }
   },
   "include": [
