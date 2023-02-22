@@ -32,7 +32,8 @@ const ModalImage = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  overflow: "hidden"
+  overflow: "hidden",
+  marginBottom: "20px"
 });
 
 const Description = styled(Typography)({
@@ -61,7 +62,7 @@ const CatModal: FC<Props> = ({ open, onClose, cat }) => {
         </ModalImage>
 
         { cat.breeds && cat.breeds?.length !== 0 && (
-          <Box marginTop="20px" marginBottom="20px">
+          <Box marginBottom="20px">
             {
               cat.breeds?.map((breed) => (
                   <Description key={breed.id}>
