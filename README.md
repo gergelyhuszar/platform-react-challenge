@@ -1,3 +1,28 @@
+# Notes
+### I would continue improvements in the following directions in case of additional time or if expecting additional requirements
+* Extract additional logic from view components
+* Generalize components where appropriate
+* Add layout files and reuse layouts
+* Use query library like React Query to improve caching and fetching of data
+* Use more sophisticated store to share data
+* Handle additional edge cases
+* Use theming
+* Use i18n files instead of inline texts
+* General refactoring, e.g.:
+  * extracting constants and configs
+  * stricter types
+  * improved layout
+  * styling
+
+---
+
+## Running the app
+### From root folder of the project run the following commands:
+1. npm install
+2. npm run start
+
+---
+
 # GlobalWebIndex Engineering Challenge
 
 ## Exercise: CatLover
