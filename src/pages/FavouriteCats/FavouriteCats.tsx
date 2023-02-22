@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Grid } from "@mui/material";
-import FavouriteCatList from "./components/FavouriteCatList";
+import FavouriteCatList from "./components";
 
 const FavouriteCats: FC = () => (
   <Grid

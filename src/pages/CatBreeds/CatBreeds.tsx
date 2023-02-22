@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Grid } from "@mui/material";
-import BreedList from "./components/BreedList";
+import BreedList from "./components";
 
 const CatBreeds: FC = () => (
   <Grid

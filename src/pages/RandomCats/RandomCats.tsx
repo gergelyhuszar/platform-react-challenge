@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Grid } from "@mui/material";
-import CatList from "./components/CatList";
+import CatList from "./components";
 
 const RandomCats: FC = () => (
   <Grid
