@@ -1,6 +1,7 @@
 interface Breed {
   id: string;
   description: string;
+  image?: Cat;
 }
 
 interface Cat {
@@ -11,4 +12,4 @@ interface Cat {
   breeds?: Breed[];
 }
 
-export type { Cat };
+export type { Cat, Breed };
