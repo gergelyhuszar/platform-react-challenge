@@ -96,8 +96,9 @@ const getFavouriteCats = async (): Promise<Cat[]> => {
   let cats: Cat[];
 
   try {
-    const { data } = await api.get("/favourites");
-    cats = data;
+    const { data }: { data: { image_id: string }[] } = await api.get("/favourites");
+    const catsWithNulls = await Promise.all(data.map((cat) => getCatById(cat.image_id)));
+    cats = catsWithNulls.filter((cat): cat is Exclude<typeof cat, null> => cat !== null);
   } catch (error) {
     cats = [];
     console.error(error);
