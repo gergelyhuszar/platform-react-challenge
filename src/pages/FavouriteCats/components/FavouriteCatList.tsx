@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import {Button, CircularProgress, Grid} from "@mui/material";
+import { Button, CircularProgress, Grid } from "@mui/material";
 import { deleteCatFromFavourites, getFavouriteCats } from "apis/catApi";
 import { Cat } from "types/cat";
 import CatImage from "components/CatImage";
@@ -48,6 +48,7 @@ const FavouriteCatList: FC = () => {
                     setCatList((catList) => catList.filter(({ id }) => id !== cat.id ));
                   }
                 }}
+                tooltip="Click to delete me"
               />
             </Grid>
           ))
